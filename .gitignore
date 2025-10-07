@@ -1,0 +1,57 @@
+﻿kashit-main/
+# General
+.DS_Store
+Thumbs.db
+*.log
+logs/
+
+# Node / Frontend
+node_modules/
+**/node_modules/
+dist/
+**/dist/
+.build/
+.cache/
+.vite/
+build/
+
+# Environment files
+.env
+.env.*
+!.env.example
+
+# Editors/IDE
+.vscode/
+.idea/
+
+# Python
+__pycache__/
+**/__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.egg-info/
+.eggs/
+.python-version
+.venv/
+venv/
+ENV/
+
+# Flask/DB (backend)
+kashit-main/backend/instance/
+kashit-main/backend/*.db
+kashit-main/backend/uv.lock
+
+# Alembic cache (keep migrations, ignore caches only)
+kashit-main/backend/migrations/**/__pycache__/
+
+# Test/coverage
+coverage/
+.coverage
+.pytest_cache/
+
+# OS/other
+*.swp
+*.swo
+~$*
+
