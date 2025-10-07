@@ -1,0 +1,330 @@
+import { Link, useNavigate } from "react-router-dom";
+import { ArrowLeft, ShoppingCart, Heart } from "lucide-react";
+import { useState, useEffect, useMemo } from "react";
+import { useCart } from "../hooks/useCart";
+
+// Local product images
+import ImgAmerican from "../images/Chips/American20rs.jpeg";
+import ImgSalted from "../images/Chips/Salted20rs.jpeg";
+import ImgWestIndies from "../images/Chips/Westindies20rs.jpeg";
+import ImgIndiaMagicMasalaBlue from "../images/Chips/IndiaMagicmasalablue20rs.jpeg";
+import ImgUncleChips from "../images/Chips/Unclechips20rs.jpeg";
+import ImgUncleChipsPlainSalted from "../images/Chips/Unclechipsplainsalted20rs.jpeg";
+import ImgKurkureChilliChatka from "../images/Chips/Kurkurechillichatka20rs.jpeg";
+import ImgKurkureSolidMasti from "../images/Chips/Kurkuresolidmasti20rs.jpeg";
+import ImgClassicSalted from "../images/Chips/Classicsalted20rs.jpeg";
+import ImgBikanoKhattaMeetha from "../images/Chips/BikanoKhattameetha10rs.jpeg";
+import ImgBikanoNavratanMixture from "../images/Chips/BikanoNavratanmixture10rs.jpeg";
+import ImgBikanoMoongDaal from "../images/Chips/BikanoMoongdaal20rs.jpeg";
+import ImgBikanoMattarMasala from "../images/Chips/Bikanomattarmasala10rs.jpeg";
+import ImgBikanoBadamLachha from "../images/Chips/Bikanobadamlachha10rs.jpeg";
+import ImgBikanoAllTimeMixture from "../images/Chips/BikanoAlltimemixture10rs.jpeg";
+import ImgBikanoTastySpicyCoatedPeanuts from "../images/Chips/Bikanotastyspicycoatedpeanuts10rs.jpeg";
+import ImgLittleHearts from "../images/Chips/Littlehearts10rs.jpeg";
+import ImgHaldiramKhattaMeetha from "../images/Chips/Haldiramkhattameetha10rs.jpeg";
+import ImgJabsonsRoastedPeanuts from "../images/Chips/Jabsonsroastedpeanuts10rs.jpeg";
+import ImgJabsonsTikkaMasalaCoatedPeanuts from "../images/Chips/Jabsontikkamasalacoatedpeanuts10rs.jpeg";
+
+export default function Chips() {
+  const navigate = useNavigate();
+  const [wishlist, setWishlist] = useState(new Set());
+  const [activeFilter, setActiveFilter] = useState("all");
+  const [filteredProducts, setFilteredProducts] = useState([]);
+  const { addToCart, getCartCount, cartItems } = useCart();
+
+  const getQty = (productId) => {
+    const item = cartItems?.find(i => i.id === productId);
+    return item ? item.quantity : 0;
+  };
+
+  const products = useMemo(() => [
+    { id: 1, name: "Lay's American", price: 20, originalPrice: 20, image: ImgAmerican, rating: 4.4, reviews: 75, inStock: true },
+    { id: 2, name: "Lay's Salted", price: 20, originalPrice: 20, image: ImgSalted, rating: 4.3, reviews: 62, inStock: true },
+    { id: 3, name: "Lay's West Indies", price: 20, originalPrice: 20, image: ImgWestIndies, rating: 4.5, reviews: 81, inStock: true },
+    { id: 4, name: "Lay's India Magic Masala (Blue)", price: 20, originalPrice: 20, image: ImgIndiaMagicMasalaBlue, rating: 4.6, reviews: 98, inStock: true },
+    { id: 5, name: "Uncle Chips", price: 20, originalPrice: 20, image: ImgUncleChips, rating: 4.2, reviews: 54, inStock: true },
+    { id: 6, name: "Uncle Chips Plain Salted", price: 20, originalPrice: 20, image: ImgUncleChipsPlainSalted, rating: 4.2, reviews: 47, inStock: true },
+    { id: 7, name: "Kurkure Chilli Chatka", price: 20, originalPrice: 20, image: ImgKurkureChilliChatka, rating: 4.3, reviews: 65, inStock: true },
+    { id: 8, name: "Kurkure Solid Masti", price: 20, originalPrice: 20, image: ImgKurkureSolidMasti, rating: 4.3, reviews: 59, inStock: true },
+    { id: 9, name: "Lay's Classic Salted", price: 20, originalPrice: 20, image: ImgClassicSalted, rating: 4.4, reviews: 88, inStock: true },
+    { id: 10, name: "Bikano Khatta Meetha", price: 10, originalPrice: 10, image: ImgBikanoKhattaMeetha, rating: 4.1, reviews: 41, inStock: true },
+    { id: 11, name: "Bikano Navratan Mixture", price: 10, originalPrice: 10, image: ImgBikanoNavratanMixture, rating: 4.1, reviews: 38, inStock: true },
+    { id: 12, name: "Bikano Moong Daal", price: 20, originalPrice: 20, image: ImgBikanoMoongDaal, rating: 4.2, reviews: 36, inStock: true },
+    { id: 13, name: "Bikano Mattar Masala", price: 10, originalPrice: 10, image: ImgBikanoMattarMasala, rating: 4.0, reviews: 29, inStock: true },
+    { id: 14, name: "Bikano Badam Lachha", price: 10, originalPrice: 10, image: ImgBikanoBadamLachha, rating: 4.0, reviews: 24, inStock: true },
+    { id: 15, name: "Bikano All Time Mixture", price: 10, originalPrice: 10, image: ImgBikanoAllTimeMixture, rating: 4.1, reviews: 33, inStock: true },
+    { id: 16, name: "Bikano Tasty Spicy Coated Peanuts", price: 10, originalPrice: 10, image: ImgBikanoTastySpicyCoatedPeanuts, rating: 4.1, reviews: 27, inStock: true },
+    { id: 17, name: "Little Hearts", price: 10, originalPrice: 10, image: ImgLittleHearts, rating: 4.2, reviews: 140, inStock: true },
+    { id: 18, name: "Haldiram Khatta Meetha", price: 10, originalPrice: 10, image: ImgHaldiramKhattaMeetha, rating: 4.2, reviews: 52, inStock: true },
+    { id: 19, name: "Jabsons Roasted Peanuts", price: 10, originalPrice: 10, image: ImgJabsonsRoastedPeanuts, rating: 4.3, reviews: 45, inStock: true },
+    { id: 20, name: "Jabsons Tikka Masala Coated Peanuts", price: 10, originalPrice: 10, image: ImgJabsonsTikkaMasalaCoatedPeanuts, rating: 4.3, reviews: 39, inStock: true }
+  ], []);
+
+  // Initialize filtered products with all products
+  useEffect(() => {
+    setFilteredProducts([...products]);
+  }, [products]);
+
+  // Apply filters based on the active filter
+  useEffect(() => {
+    let result = [...products];
+    
+    switch(activeFilter) {
+      case "low-to-high":
+        result.sort((a, b) => a.price - b.price);
+        break;
+      case "high-to-low":
+        result.sort((a, b) => b.price - a.price);
+        break;
+      case "rating":
+        result.sort((a, b) => b.rating - a.rating);
+        break;
+      case "in-stock":
+        result = result.filter(product => product.inStock);
+        break;
+      default:
+        // "all" - no sorting needed
+        break;
+    }
+    
+    setFilteredProducts(result);
+  }, [activeFilter, products]);
+
+  const toggleWishlist = (productId) => {
+    setWishlist(prev => {
+      const newWishlist = new Set(prev);
+      if (newWishlist.has(productId)) {
+        newWishlist.delete(productId);
+      } else {
+        newWishlist.add(productId);
+      }
+      return newWishlist;
+    });
+  };
+  
+  const handleFilterChange = (filter) => {
+    setActiveFilter(filter);
+    
+    // Apply filter immediately
+    let result = [...products];
+    
+    switch(filter) {
+      case "low-to-high":
+        result.sort((a, b) => a.price - b.price);
+        break;
+      case "high-to-low":
+        result.sort((a, b) => b.price - a.price);
+        break;
+      case "rating":
+        result.sort((a, b) => b.rating - a.rating);
+        break;
+      case "in-stock":
+        result = result.filter(product => product.inStock);
+        break;
+      default:
+        // "all" - no sorting needed
+        break;
+    }
+    
+    setFilteredProducts(result);
+  };
+
+  return (
+    <div className="min-h-screen bg-gray-50">
+      {/* Header */}
+      <div className="bg-green-600 shadow-sm">
+        <div className="w-full py-4">
+          <div className="flex items-center justify-between px-4">
+            <button
+              onClick={() => navigate(-1)}
+              className="flex items-center text-white hover:text-green-100 transition-colors"
+            >
+              <ArrowLeft className="w-5 h-5 mr-2" />
+              Back
+            </button>
+            <h1 className="text-2xl font-bold text-white">Chips</h1>
+            <Link to="/cart" className="relative inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white text-green-700 text-sm font-semibold hover:bg-green-50">
+              <ShoppingCart className="h-4 w-4" />
+              <span>Cart</span>
+              {getCartCount() > 0 && (
+                <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
+                  {getCartCount()}
+                </span>
+              )}
+            </Link>
+          </div>
+        </div>
+      </div>
+
+      {/* Main Content */}
+      <div className="w-full py-8">
+        {/* Category Description */}
+        <div className="mb-8">
+          <p className="text-lg text-gray-600 text-center max-w-3xl mx-auto">
+            Discover the finest selection of crispy chips and snacks. 
+            Crunchy, flavorful chips delivered right to your doorstep in Srinagar.
+          </p>
+        </div>
+
+        {/* Filters */}
+        <div className="mb-8 flex flex-wrap gap-4 justify-center">
+          <button 
+            onClick={() => handleFilterChange("all")}
+            className={`px-4 py-2 rounded-full text-sm font-medium ${
+              activeFilter === "all" 
+                ? "bg-green-600 text-white" 
+                : "bg-white text-gray-700 border border-gray-300 hover:bg-gray-50"
+            }`}
+          >
+            All Products
+          </button>
+          <button 
+            onClick={() => handleFilterChange("low-to-high")}
+            className={`px-4 py-2 rounded-full text-sm font-medium ${
+              activeFilter === "low-to-high" 
+                ? "bg-green-600 text-white" 
+                : "bg-white text-gray-700 border border-gray-300 hover:bg-gray-50"
+            }`}
+          >
+            Price: Low to High
+          </button>
+          <button 
+            onClick={() => handleFilterChange("high-to-low")}
+            className={`px-4 py-2 rounded-full text-sm font-medium ${
+              activeFilter === "high-to-low" 
+                ? "bg-green-600 text-white" 
+                : "bg-white text-gray-700 border border-gray-300 hover:bg-gray-50"
+            }`}
+          >
+            Price: High to Low
+          </button>
+          <button 
+            onClick={() => handleFilterChange("rating")}
+            className={`px-4 py-2 rounded-full text-sm font-medium ${
+              activeFilter === "rating" 
+                ? "bg-green-600 text-white" 
+                : "bg-white text-gray-700 border border-gray-300 hover:bg-gray-50"
+            }`}
+          >
+            Rating
+          </button>
+          <button 
+            onClick={() => handleFilterChange("in-stock")}
+            className={`px-4 py-2 rounded-full text-sm font-medium ${
+              activeFilter === "in-stock" 
+                ? "bg-green-600 text-white" 
+                : "bg-white text-gray-700 border border-gray-300 hover:bg-gray-50"
+            }`}
+          >
+            In Stock
+          </button>
+        </div>
+
+        {/* Products Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          {filteredProducts.map((product) => (
+            <div key={product.id} className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 overflow-hidden group">
+              {/* Product Image */}
+              <div className="relative aspect-square overflow-hidden">
+                <img
+                  src={product.image}
+                  alt={product.name}
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                />
+                {!product.inStock && (
+                  <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+                    <span className="text-white font-semibold">Out of Stock</span>
+                  </div>
+                )}
+                <button
+                  onClick={() => toggleWishlist(product.id)}
+                  className="absolute top-2 right-2 p-2 bg-white rounded-full shadow-md hover:bg-gray-50 transition-colors"
+                >
+                  <Heart 
+                    className={`w-4 h-4 ${
+                      wishlist.has(product.id) ? 'text-red-500 fill-current' : 'text-gray-400'
+                    }`} 
+                  />
+                </button>
+              </div>
+
+              {/* Product Info */}
+              <div className="p-4">
+                <h3 className="font-semibold text-gray-900 mb-2 line-clamp-2">
+                  {product.name}
+                </h3>
+                
+                {/* Rating */}
+                <div className="flex items-center mb-2">
+                  <div className="flex items-center">
+                    {[...Array(5)].map((_, i) => (
+                      <svg
+                        key={i}
+                        className={`w-4 h-4 ${
+                          i < Math.floor(product.rating)
+                            ? "text-yellow-400"
+                            : "text-gray-300"
+                        }`}
+                        fill="currentColor"
+                        viewBox="0 0 20 20"
+                      >
+                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                      </svg>
+                    ))}
+                  </div>
+                  <span className="text-sm text-gray-500 ml-1">
+                    ({product.reviews})
+                  </span>
+                </div>
+
+                {/* Price */}
+                <div className="flex items-center justify-between mb-3">
+                  <div className="flex items-center space-x-2">
+                    <span className="text-lg font-bold text-gray-900">
+                      ₹{product.price}
+                    </span>
+                    {product.originalPrice > product.price && (
+                      <span className="text-sm text-gray-500 line-through">
+                        ₹{product.originalPrice}
+                      </span>
+                    )}
+                  </div>
+                  {product.originalPrice > product.price && (
+                    <span className="text-xs bg-red-100 text-red-600 px-2 py-1 rounded">
+                      {Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)}% OFF
+                    </span>
+                  )}
+                </div>
+
+                {getQty(product.id) > 0 && (
+                  <div className="mb-2 text-sm text-green-700">In cart: {getQty(product.id)}</div>
+                )}
+
+                {/* Add to Cart Button */}
+                <button
+                  disabled={!product.inStock}
+                  className={`w-full py-2 px-4 rounded-lg font-medium transition-colors duration-300 flex items-center justify-center ${
+                    product.inStock
+                      ? "bg-green-600 text-white hover:bg-green-700"
+                      : "bg-gray-300 text-gray-500 cursor-not-allowed"
+                  }`}
+                  onClick={() => {
+                    if (product.inStock) {
+                      addToCart(product);
+                      alert("Added to cart");
+                    }
+                  }}
+                >
+                  <ShoppingCart className="w-4 h-4 mr-2" />
+                  {product.inStock ? "Add to Cart" : "Out of Stock"}
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
+
+      </div>
+    </div>
+  );
+}
+

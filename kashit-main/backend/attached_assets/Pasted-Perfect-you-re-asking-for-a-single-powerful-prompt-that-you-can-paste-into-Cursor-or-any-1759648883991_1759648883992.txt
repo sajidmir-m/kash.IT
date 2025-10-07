@@ -1,0 +1,98 @@
+Perfect 👍 — you’re asking for a **single powerful prompt** that you can paste into **Cursor (or any AI code generator)** so it can build your **full backend** for your grocery + IoT-based website (with login, OTP, cart, coupons, live map, etc.).
+
+Here’s a **complete and optimized prompt** for that 👇
+
+---
+
+### 🚀 **Ultimate Prompt for Cursor / AI Code Builder**
+
+> **Prompt:**
+>
+> Build a complete, production-ready **backend** for my **Grocery and IoT-based website** using **Python (Flask)** as the main backend framework and **PostgreSQL** as the database.
+>
+> The backend should include all major functional modules listed below, fully implemented with authentication, routes, and database integration.
+>
+> ---
+>
+> ### 🧩 **Main Functional Requirements**
+>
+> 1. **User Authentication System**
+>
+>    * Login, signup, and logout endpoints.
+>    * Registration with email + password.
+>    * Send **OTP verification via email** using a secure method (e.g., Flask-Mail or SMTP).
+>    * JWT-based authentication for session management.
+>    * Password reset via email OTP.
+> 2. **Customer Profile**
+>
+>    * Create, view, and edit profile.
+>    * Address management (for delivery).
+>    * Option to link IoT devices (like Arduino/NodeMCU boards) to the user account.
+> 3. **Products & Categories**
+>
+>    * CRUD APIs for product categories (grains, fruits, vegetables, dairy, etc.).
+>    * CRUD APIs for products (name, description, price, stock, image URL).
+>    * Ability to search, filter, and sort products.
+> 4. **Cart & Orders**
+>
+>    * Add items to cart, update quantity, and remove items.
+>    * Checkout process (with validation of stock).
+>    * Order placement and status tracking (Pending, Shipped, Delivered).
+>    * Payment status simulation (can use a dummy success/failure endpoint).
+> 5. **Coupons & Discounts**
+>
+>    * Admin can create and manage coupon codes.
+>    * Users can apply coupon codes at checkout.
+>    * Validate expiry date, usage limit, and discount percentage.
+> 6. **Live Maps Integration**
+>
+>    * Integrate Google Maps or OpenStreetMap API to show **delivery tracking**.
+>    * Track delivery agent location in real-time (simulate with dummy coordinates update).
+> 7. **IoT Integration**
+>
+>    * Add API endpoints to receive sensor data from Arduino/NodeMCU (e.g., temperature, humidity).
+>    * Store sensor data linked to user accounts or grocery storage units.
+>    * Option to control IoT devices (e.g., switch relays, read sensor states).
+> 8. **Admin Panel APIs**
+>
+>    * Admin login with role-based access.
+>    * CRUD for products, categories, coupons, users, and orders.
+> 9. **Database**
+>
+>    * Use **PostgreSQL** with SQLAlchemy ORM.
+>    * Include proper models, relationships, and migrations (use Flask-Migrate).
+> 10. **Security & Structure**
+>
+>     * Use environment variables for credentials.
+>     * Follow MVC pattern: `routes/`, `models/`, `controllers/`, `services/`.
+>     * Proper error handling and validation.
+>     * CORS enabled for frontend integration.
+> 11. **Documentation**
+>
+>     * Add Postman/OpenAPI documentation for all endpoints.
+>     * Include `.env.example` file for configuration.
+>
+> ---
+>
+> ### 🧠 **Tech Stack Preferences**
+>
+> * **Backend:** Flask (Python)
+> * **Database:** PostgreSQL (SQLAlchemy ORM)
+> * **Authentication:** JWT + Flask-Mail (for OTP)
+> * **Maps:** Google Maps API or Leaflet (for delivery tracking)
+> * **IoT:** REST APIs for Arduino/NodeMCU integration
+> * **Deployment-ready:** Use environment configs for production
+>
+> ---
+>
+> ### 🎯 **Expected Output**
+>
+> * A fully functional Flask backend with modular code structure.
+> * All main routes implemented and tested.
+> * Database models for users, products, orders, coupons, IoT devices, and carts.
+> * Endpoints fully documented and ready to integrate with the frontend.
+
+---
+
+Would you like me to adjust the prompt for a **Node.js (Express + MongoDB)** version instead (since it’s also very popular with frontends)?
+I can give you a **version for Node.js** too if your frontend is built with React, Vue, or Next.js.
