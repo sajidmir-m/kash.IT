@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { Trash2, Minus, Plus, ArrowLeft, Tag, ChevronRight, Wallet, MapPin, Pencil, Save, X, Package, Wrench, Truck, Receipt, Ticket } from "lucide-react";
 import { useCart } from "../hooks/useCart";
 import { validateCoupon } from "../api/coupons";
+import { getRazorpayKey, createRazorpayOrder } from "../api/payments";
 import { createOrder } from "../api/orders";
 import { getAddresses, updateAddress } from "../api/addresses";
 
@@ -92,6 +93,18 @@ export default function Cart() {
     }
   };
 
+  async function loadRazorpayScript() {
+    return new Promise((resolve) => {
+      if (document.getElementById('razorpay-sdk')) return resolve(true);
+      const script = document.createElement('script');
+      script.id = 'razorpay-sdk';
+      script.src = 'https://checkout.razorpay.com/v1/checkout.js';
+      script.onload = () => resolve(true);
+      script.onerror = () => resolve(false);
+      document.body.appendChild(script);
+    });
+  }
+
   const onPlaceOrder = async () => {
     const token = localStorage.getItem('accessToken');
     if (!token) {
@@ -103,17 +116,50 @@ export default function Cart() {
       return;
     }
     try {
-      const payload = {
-        address_id: defaultAddressId,
-        coupon_code: couponApplied?.code || undefined
+      // 1) Create Razorpay order on backend
+      const { key, order } = await createRazorpayOrder({ amount: toPay, currency: 'INR', receipt: `rcpt_${Date.now()}` });
+
+      // 2) Ensure SDK is loaded
+      const ok = await loadRazorpayScript();
+      if (!ok) {
+        alert('Failed to load payment SDK');
+        return;
+      }
+
+      // 3) Open Razorpay Checkout
+      const options = {
+        key,
+        amount: order.amount,
+        currency: order.currency,
+        name: 'Kash.it',
+        description: 'Order payment',
+        order_id: order.id,
+        handler: async function () {
+          try {
+            // create the order in app after successful payment
+            const payload = {
+              address_id: defaultAddressId,
+              coupon_code: couponApplied?.code || undefined
+            };
+            await createOrder(payload);
+            clearCart();
+            navigate('/orders');
+          } catch (e) {
+            alert(e?.message || 'Payment captured but order creation failed');
+          }
+        },
+        prefill: {
+          name: '',
+          email: '',
+          contact: ''
+        },
+        theme: { color: '#16a34a' }
       };
-      const data = await createOrder(payload);
-      // naive success path: clear local cart and go to orders page
-      clearCart();
-      navigate('/orders');
+
+      const rzp = new window.Razorpay(options);
+      rzp.open();
     } catch (e) {
-      // surface minimal error
-      alert(e?.message || 'Failed to create order');
+      alert(e?.message || 'Failed to initiate payment');
     }
   };
 
