@@ -53,6 +53,7 @@ def create_app():
     from routes.order_routes import order_bp
     from routes.coupon_routes import coupon_bp
     from routes.iot_routes import iot_bp
+    from routes.payment_routes import payment_bp
 
     app.register_blueprint(auth_bp)
     app.register_blueprint(addresses_bp)
@@ -62,6 +63,7 @@ def create_app():
     app.register_blueprint(order_bp)
     app.register_blueprint(coupon_bp)
     app.register_blueprint(iot_bp)
+    app.register_blueprint(payment_bp)
 
     # --------- Basic routes ---------
     @app.route('/')
